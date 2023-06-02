@@ -40,7 +40,7 @@ const escolherData = (dia, mes, ano) => {
     .click();
 
   cy.get(".datepicker-days")
-    .find(`div[data-date*="${mesAbreviado} ${dia}"]`)
+    .find(`div[data-date*="${mesAbreviado} ${dia} ${ano}"]`)
     .click();
 };
 
