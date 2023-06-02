@@ -1,29 +1,28 @@
-
-
 const dataAtual = new Date();
 
-//Caso o mês tenha um tamanho menor que 2, será adicionado 0 como prefixo e o mes está sendo adicionado a 1 pois os meses começam em 0
+//Caso o mês tenha menos que 2 dígitos, será adicionado 0 como prefixo e está sendo adicionado 1 ao mês pois os meses no objeto Date() começam no index 0
 const mesAtual = String(dataAtual.getMonth() + 1).padStart(2, "0");
 
-const anoAtual = dataAtual.getFullYear();
+const anoAtual = String(dataAtual.getFullYear());
 
-//Caso o dia tenha um tamanho menor que 2, será adicionado 0 como prefixo
+//Caso o dia tenha um menos que 2 dígitos, será adicionado 0 como prefixo
 const diaAtual = String(dataAtual.getDate()).padStart(2, "0");
 
 const dataAtualFormatada = `${diaAtual}/${mesAtual}/${anoAtual}`;
 
+//Função para escolher a data no datepicker
 const escolherData = (dia, mes, ano) => {
-  //É montada a variável data, separada utilizando o split, fornecendo um array "partesData"
+  //Montada a variável data, separada utilizando o split, fornecendo um array "partesData"
   const data = `${dia}/${mes}/${ano}`;
   const partesData = data.split("/");
 
-  //É subtraido 1 do valor do mês pois os meses no objeto Date() começam em 0
+  //Subtraido 1 do valor do mês pois os meses no objeto Date() começam no index 0
   const mesIndex = parseInt(partesData[1]) - 1;
 
-  //É criado um objeto Date levando em consideração o padrão americano
+  //Criado um objeto Date levando em consideração o padrão americano
   const dataObjeto = new Date(partesData[2], mesIndex, partesData[0]);
 
-  //É utilizado o metódo 'toLocaleString()' com os parametros 'en-US' para deficinir o idioma inglês e month: "short" para adquirir o mês abreviado
+  //Como o data-date que será utilizado está no formato padrãao de string Javascript, será necessário o mes abreviado em inglês ,para isto foi utilizado o método 'toLocaleString()' com os parametros 'en-US' e { month: "short" }
   const mesAbreviado = dataObjeto.toLocaleString("en-US", { month: "short" });
 
   cy.get(".datetimepicker-dummy-wrapper").click();
