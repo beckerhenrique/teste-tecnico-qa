@@ -22,7 +22,7 @@ const escolherData = (dia, mes, ano) => {
   //Criado um objeto Date levando em consideração o padrão americano
   const dataObjeto = new Date(partesData[2], mesIndex, partesData[0]);
 
-  //Como o data-date que será utilizado está no formato padrãao de string Javascript, será necessário o mes abreviado em inglês ,para isto foi utilizado o método 'toLocaleString()' com os parametros 'en-US' e { month: "short" }
+  //Como o data-date que será utilizado está no formato padrão de string Javascript, será necessário o mês abreviado em inglês, para isto foi utilizado o método 'toLocaleString()' com os parametros 'en-US' e { month: "short" }
   const mesAbreviado = dataObjeto.toLocaleString("en-US", { month: "short" });
 
   cy.get(".datetimepicker-dummy-wrapper").click();
@@ -44,32 +44,34 @@ const escolherData = (dia, mes, ano) => {
     .click();
 };
 
-beforeEach(() => {
-  cy.visit("http://training-wheels-qaninja.herokuapp.com/datepicker");
-});
-
-it("Verificar se o datepicker está vindo com a data atual", () => {
-  cy.get("div #date")
-    .invoke("val")
-    .then((valorCampo) => {
-      expect(valorCampo).to.equal(dataAtualFormatada);
-    });
-});
-
-it("Limpar datepicker e trazer data atual através de atalho", () => {
-  cy.get(".datetimepicker-clear-button").click();
-
-  escolherData(diaAtual, mesAtual, anoAtual);
-});
-
-it("Colocar a data do seu aniversário", () => {
-  escolherData("10", "06", "1997");
-});
-
-it("Colocar o dia atual no mês anterior", () => {
-  escolherData(
-    diaAtual,
-    String(dataAtual.getMonth()).padStart(2, "0"),
-    anoAtual
-  );
+describe('Testes datepicker com acesso a url /datepicker', () => {
+  beforeEach(() => {
+    cy.visit("http://training-wheels-qaninja.herokuapp.com/datepicker");
+  });
+  
+  it("Verificar se o datepicker está vindo com a data atual", () => {
+    cy.get("div #date")
+      .invoke("val")
+      .then((valorCampo) => {
+        expect(valorCampo).to.equal(dataAtualFormatada);
+      });
+  });
+  
+  it("Limpar datepicker e trazer data atual através de atalho", () => {
+    cy.get(".datetimepicker-clear-button").click();
+  
+    escolherData(diaAtual, mesAtual, anoAtual);
+  });
+  
+  it("Colocar a data do seu aniversário", () => {
+    escolherData("10", "06", "1997");
+  });
+  
+  it("Colocar o dia atual no mês anterior", () => {
+    escolherData(
+      diaAtual,
+      String(dataAtual.getMonth()).padStart(2, "0"),
+      anoAtual
+    );
+  });
 });
