@@ -52,6 +52,12 @@ class AuthActionsDatepicker {
   cy.get(".datepicker-days")
     .find(`div[data-date*="${mesAbreviado} ${dia} ${ano}"]`)
     .click();
+
+    cy.get("div #date")
+      .invoke("val")
+      .then((valorCampo) => {
+        expect(valorCampo).to.equal(data);
+      });
   }
 }
 
