@@ -39,15 +39,9 @@ describe("Testes que acessam a URL de Login", () => {
     cy.get("#nickId").type(login);
 
     cy.get("#passId").type(senha);
-
-    // cy.intercept('GET', 'https://ka-f.fontawesome.com/releases/v5.15.4/js/free.min.js?token=0ffbc211d1').as('conta')
-
+    
     clickBtn();
 
-    // cy.wait('@conta').then((interception) => {
-    //   cy.log(JSON.stringify(interception))
-    // })
-    
     cy.get(".title").should("contain", "Olá Papito, bem-vindo ao Orkut");
   });
 
